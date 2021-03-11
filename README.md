@@ -1,6 +1,4 @@
-# My-C-GetNextLine
-
-DESCRIPTION
+# DESCRIPTION
 
 get_next_line() reads line from a file descriptor
 with defined buffer size (default 4096). Supports multiple files.
