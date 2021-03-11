@@ -6,3 +6,7 @@ RETURN VALUES
 	 1 : A line has been read
 	 0 : EOF has been reached
 	-1 : An ERROR happend
+
+# Prototype:
+
+int get_next_line(int fd, char **line)
