@@ -6,7 +6,7 @@
 /*   By: bhatches <bhatches@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/15 12:12:10 by bhatches          #+#    #+#             */
-/*   Updated: 2020/11/30 14:07:21 by bhatches         ###   ########.fr       */
+/*   Updated: 2021/04/12 18:30:50 by bhatches         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 **	-1 : An ERROR happend
 */
 
-int		get_next_line(int fd, char **line)
+int	get_next_line(int fd, char **line)
 {
 	static char		*buf[1024];
 
@@ -34,11 +34,11 @@ int		get_next_line(int fd, char **line)
 	return (gnl_read_line(fd, buf, line));
 }
 
-int		gnl_check_or_creat_buf(int fd, char **buf)
+int	gnl_check_or_creat_buf(int fd, char **buf)
 {
 	if (buf[fd] == NULL)
 	{
-		buf[fd] = (char*)malloc(sizeof(char) * (BUFFER_SIZE + 1));
+		buf[fd] = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
 		if (buf[fd] == NULL)
 		{
 			return (ERROR);
@@ -48,11 +48,12 @@ int		gnl_check_or_creat_buf(int fd, char **buf)
 	return (TRUE);
 }
 
-int		gnl_read_line(int fd, char **buf, char **line)
+int	gnl_read_line(int fd, char **buf, char **line)
 {
 	long long	bytes_rd;
 
-	if ((*line = ft_leftjoin_sep(*line, buf[fd], '\n')) == NULL)
+	*line = ft_leftjoin_sep(*line, buf[fd], '\n');
+	if (*line == NULL)
 		return (ft_free_str(&(buf[fd])) - 1);
 	while (ft_strchr(buf[fd], '\n') == NULL)
 	{
@@ -63,10 +64,12 @@ int		gnl_read_line(int fd, char **buf, char **line)
 			return ((int)bytes_rd);
 		}
 		buf[fd][bytes_rd] = '\0';
-		if ((*line = ft_leftjoin_sep(*line, buf[fd], '\n')) == NULL)
+		*line = ft_leftjoin_sep(*line, buf[fd], '\n');
+		if (*line == NULL)
 			return (ft_free_str(&(buf[fd])) - 1);
 	}
-	if ((buf[fd] = ft_rewrite_str(buf[fd], '\n')) == NULL)
+	buf[fd] = ft_rewrite_str(buf[fd], '\n');
+	if (buf[fd] == NULL)
 		return (ft_free_str(&(buf[fd])) - 1);
 	return (1);
 }
